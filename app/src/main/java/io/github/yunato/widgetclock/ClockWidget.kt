@@ -4,6 +4,9 @@ import android.appwidget.AppWidgetManager
 import android.appwidget.AppWidgetProvider
 import android.content.Context
 import android.widget.RemoteViews
+import org.joda.time.DateTime
+import org.joda.time.DateTimeZone
+import java.util.*
 
 /**
  * Implementation of App Widget functionality.
@@ -27,17 +30,11 @@ class ClockWidget : AppWidgetProvider() {
 
     companion object {
 
-        internal fun updateAppWidget(
-            context: Context, appWidgetManager: AppWidgetManager,
-            appWidgetId: Int
-        ) {
-
-            val widgetText = context.getString(R.string.appwidget_text)
-            // Construct the RemoteViews object
+        internal fun updateAppWidget(context: Context, appWidgetManager: AppWidgetManager, appWidgetId: Int) {
+            val widgetText = DateTime(DateTimeZone.forTimeZone(TimeZone.getTimeZone("Asia/Tokyo"))).toString("HH:mm:ss",Locale.JAPANESE)
             val views = RemoteViews(context.packageName, R.layout.clock_widget)
             views.setTextViewText(R.id.appwidget_text, widgetText)
 
-            // Instruct the widget manager to update the widget
             appWidgetManager.updateAppWidget(appWidgetId, views)
         }
     }

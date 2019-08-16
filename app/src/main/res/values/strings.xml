@@ -1,5 +1,4 @@
 <resources>
     <string name="app_name">WidgetClock</string>
-    <string name="appwidget_text">EXAMPLE</string>
-    <string name="add_widget">Add widget</string>
+    <string name="appwidget_text">CLOCK</string>
 </resources>
