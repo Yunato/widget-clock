@@ -1,5 +1,6 @@
 package io.github.yunato.widgetclock
 
+import android.app.PendingIntent
 import android.appwidget.AppWidgetManager
 import android.appwidget.AppWidgetProvider
 import android.content.Context
@@ -35,15 +36,15 @@ class CanvasWidget : AppWidgetProvider() {
 
     companion object {
 
-        internal fun updateAppWidget(
-            context: Context, appWidgetManager: AppWidgetManager,
-            appWidgetId: Int
-        ) {
-
+        internal fun updateAppWidget(context: Context, appWidgetManager: AppWidgetManager, appWidgetId: Int) {
             val widgetText = CanvasWidgetConfigureActivity.loadTitlePref(context, appWidgetId)
             // Construct the RemoteViews object
             val views = RemoteViews(context.packageName, R.layout.canvas_widget)
             views.setTextViewText(R.id.appwidget_text, widgetText)
+
+            val intent = CanvasWidgetConfigureActivity.intent(context, appWidgetId)
+            val pendingIntent = PendingIntent.getActivity(context, appWidgetId, intent, 0)
+            views.setOnClickPendingIntent(R.id.layout, pendingIntent)
 
             // Instruct the widget manager to update the widget
             appWidgetManager.updateAppWidget(appWidgetId, views)

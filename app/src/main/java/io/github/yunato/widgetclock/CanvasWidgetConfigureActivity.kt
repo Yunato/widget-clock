@@ -4,7 +4,6 @@ import android.app.Activity
 import android.appwidget.AppWidgetManager
 import android.content.Context
 import android.content.Intent
-import android.content.SharedPreferences
 import android.os.Bundle
 import android.view.View
 import android.widget.EditText
@@ -14,7 +13,8 @@ import android.widget.EditText
  */
 class CanvasWidgetConfigureActivity : Activity() {
     internal var mAppWidgetId = AppWidgetManager.INVALID_APPWIDGET_ID
-    internal var mAppWidgetText: EditText
+    internal lateinit var mAppWidgetText: EditText
+
     internal var mOnClickListener: View.OnClickListener = View.OnClickListener {
         val context = this@CanvasWidgetConfigureActivity
 
@@ -29,7 +29,7 @@ class CanvasWidgetConfigureActivity : Activity() {
         // Make sure we pass back the original appWidgetId
         val resultValue = Intent()
         resultValue.putExtra(AppWidgetManager.EXTRA_APPWIDGET_ID, mAppWidgetId)
-        setResult(Activity.RESULT_OK, resultValue)
+        setResult(RESULT_OK, resultValue)
         finish()
     }
 
@@ -38,7 +38,7 @@ class CanvasWidgetConfigureActivity : Activity() {
 
         // Set the result to CANCELED.  This will cause the widget host to cancel
         // out of the widget placement if the user presses the back button.
-        setResult(Activity.RESULT_CANCELED)
+        setResult(RESULT_CANCELED)
 
         setContentView(R.layout.canvas_widget_configure)
         mAppWidgetText = findViewById<View>(R.id.appwidget_text) as EditText
@@ -48,9 +48,7 @@ class CanvasWidgetConfigureActivity : Activity() {
         val intent = intent
         val extras = intent.extras
         if (extras != null) {
-            mAppWidgetId = extras.getInt(
-                AppWidgetManager.EXTRA_APPWIDGET_ID, AppWidgetManager.INVALID_APPWIDGET_ID
-            )
+            mAppWidgetId = extras.getInt(AppWidgetManager.EXTRA_APPWIDGET_ID, AppWidgetManager.INVALID_APPWIDGET_ID)
         }
 
         // If this activity was started with an intent without an app widget ID, finish with an error.
@@ -87,6 +85,11 @@ class CanvasWidgetConfigureActivity : Activity() {
             prefs.remove(PREF_PREFIX_KEY + appWidgetId)
             prefs.apply()
         }
+
+        fun intent(context: Context, appWidgetId: Int): Intent =
+            Intent(context, CanvasWidgetConfigureActivity::class.java).setFlags(Intent.FLAG_ACTIVITY_NEW_TASK).apply{
+                putExtra(AppWidgetManager.EXTRA_APPWIDGET_ID, appWidgetId)
+            }
     }
 }
 
