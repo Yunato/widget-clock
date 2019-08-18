@@ -36,19 +36,14 @@ class ClockWidget : AppWidgetProvider() {
             val views = RemoteViews(context.packageName, R.layout.clock_widget)
             views.setTextViewText(R.id.appwidget_text, widgetText)
 
-//            val intent = ClockService.intent(context, appWidgetId)
-//            val pendingIntent = PendingIntent.getService(context, appWidgetId, intent, 0)
-//            val alarmManager = context.getSystemService(Context.ALARM_SERVICE) as AlarmManager
-//            alarmManager.cancel(pendingIntent)
-//            val interval = 1000 * 60L
-//            alarmManager.setRepeating(AlarmManager.ELAPSED_REALTIME, SystemClock.elapsedRealtime(), interval, pendingIntent)
-
             val handler = Handler()
             val r = Runnable {
                 updateAppWidget(context, appWidgetManager, appWidgetId)
             }
-            handler.postDelayed(r, 1000)
 
+            val now = DateTime(DateTimeZone.forTimeZone(TimeZone.getTimeZone("Asia/Tokyo")))
+            val next = DateTime(now.year,now.monthOfYear,now.dayOfMonth,now.hourOfDay,now.minuteOfHour,now.secondOfMinute,0).plusSeconds(1)
+            handler.postDelayed(r, (next.millisOfSecond - next.millisOfSecond).toLong())
 
             appWidgetManager.updateAppWidget(appWidgetId, views)
         }
