@@ -1,6 +1,8 @@
 <resources>
     <string name="app_name">WidgetClock</string>
-    <string name="appwidget_text">CLOCK</string>
+    <string name="appwidget_clock_text">CLOCK</string>
+    <string name="appwidget_touch_text">TOUCH</string>
+    <string name="appwidget_canvas_text">CANVAS</string>
     <string name="configure">Configure</string>
     <string name="add_widget">Add widget</string>
 </resources>

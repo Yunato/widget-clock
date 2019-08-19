@@ -40,7 +40,7 @@ class TouchWidgetConfigureActivity : Activity() {
         // out of the widget placement if the user presses the back button.
         setResult(RESULT_CANCELED)
 
-        setContentView(R.layout.canvas_widget_configure)
+        setContentView(R.layout.touch_widget_configure)
         mAppWidgetText = findViewById<View>(R.id.appwidget_text) as EditText
         findViewById<View>(R.id.add_button).setOnClickListener(mOnClickListener)
 
@@ -77,7 +77,7 @@ class TouchWidgetConfigureActivity : Activity() {
         internal fun loadTitlePref(context: Context, appWidgetId: Int): String {
             val prefs = context.getSharedPreferences(PREFS_NAME, 0)
             val titleValue = prefs.getString(PREF_PREFIX_KEY + appWidgetId, null)
-            return titleValue ?: context.getString(R.string.appwidget_text)
+            return titleValue ?: context.getString(R.string.appwidget_touch_text)
         }
 
         internal fun deleteTitlePref(context: Context, appWidgetId: Int) {
