@@ -3,6 +3,7 @@ package io.github.yunato.widgetclock
 import android.appwidget.AppWidgetManager
 import android.appwidget.AppWidgetProvider
 import android.content.Context
+import android.graphics.*
 import android.widget.RemoteViews
 
 /**
@@ -26,18 +27,32 @@ class CanvasWidget : AppWidgetProvider() {
     }
 
     companion object {
+//        private const val offset: Float = 5F
+        private const val radius: Float = 750F
+        private const val cWidth: Int = 1600
+        private const val cHeight: Int = 1600
+        private const val wOffsetFromCenter = 00F
+        private const val hOffsetFromCenter = 0F
 
-        internal fun updateAppWidget(
-            context: Context, appWidgetManager: AppWidgetManager,
-            appWidgetId: Int
-        ) {
-
-            val widgetText = context.getString(R.string.appwidget_canvas_text)
-            // Construct the RemoteViews object
+        internal fun updateAppWidget(context: Context, appWidgetManager: AppWidgetManager, appWidgetId: Int) {
             val views = RemoteViews(context.packageName, R.layout.canvas_widget)
-            views.setTextViewText(R.id.appwidget_text, widgetText)
 
-            // Instruct the widget manager to update the widget
+            val mPaint = Paint()
+            mPaint.color = Color.RED
+
+            val bitmap = Bitmap.createBitmap(cWidth, cHeight, Bitmap.Config.ARGB_8888)
+            val canvas = Canvas(bitmap)
+            canvas.drawColor(Color.WHITE)
+
+            val rectF = RectF(
+                cWidth / 2.0F - radius + wOffsetFromCenter,
+                cHeight / 2.0F - radius + hOffsetFromCenter,
+                cWidth / 2.0F + radius + wOffsetFromCenter,
+                cHeight / 2.0F + radius + hOffsetFromCenter)
+            canvas.drawArc(rectF, 0F, 360F, false, mPaint)
+
+            views.setImageViewBitmap(R.id.appwidget_canvas, bitmap)
+
             appWidgetManager.updateAppWidget(appWidgetId, views)
         }
     }
