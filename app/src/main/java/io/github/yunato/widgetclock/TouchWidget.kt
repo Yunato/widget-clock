@@ -8,9 +8,9 @@ import android.widget.RemoteViews
 
 /**
  * Implementation of App Widget functionality.
- * App Widget Configuration implemented in [CanvasWidgetConfigureActivity]
+ * App Widget Configuration implemented in [TouchWidgetConfigureActivity]
  */
-class CanvasWidget : AppWidgetProvider() {
+class TouchWidget : AppWidgetProvider() {
 
     override fun onUpdate(context: Context, appWidgetManager: AppWidgetManager, appWidgetIds: IntArray) {
         // There may be multiple widgets active, so update all of them
@@ -22,7 +22,7 @@ class CanvasWidget : AppWidgetProvider() {
     override fun onDeleted(context: Context, appWidgetIds: IntArray) {
         // When the user deletes the widget, delete the preference associated with it.
         for (appWidgetId in appWidgetIds) {
-            CanvasWidgetConfigureActivity.deleteTitlePref(context, appWidgetId)
+            TouchWidgetConfigureActivity.deleteTitlePref(context, appWidgetId)
         }
     }
 
@@ -37,12 +37,12 @@ class CanvasWidget : AppWidgetProvider() {
     companion object {
 
         internal fun updateAppWidget(context: Context, appWidgetManager: AppWidgetManager, appWidgetId: Int) {
-            val widgetText = CanvasWidgetConfigureActivity.loadTitlePref(context, appWidgetId)
+            val widgetText = TouchWidgetConfigureActivity.loadTitlePref(context, appWidgetId)
             // Construct the RemoteViews object
             val views = RemoteViews(context.packageName, R.layout.canvas_widget)
             views.setTextViewText(R.id.appwidget_text, widgetText)
 
-            val intent = CanvasWidgetConfigureActivity.intent(context, appWidgetId)
+            val intent = TouchWidgetConfigureActivity.intent(context, appWidgetId)
             val pendingIntent = PendingIntent.getActivity(context, appWidgetId, intent, 0)
             views.setOnClickPendingIntent(R.id.layout, pendingIntent)
 

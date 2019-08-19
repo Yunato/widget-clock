@@ -9,14 +9,14 @@ import android.view.View
 import android.widget.EditText
 
 /**
- * The configuration screen for the [CanvasWidget] AppWidget.
+ * The configuration screen for the [TouchWidget] AppWidget.
  */
-class CanvasWidgetConfigureActivity : Activity() {
+class TouchWidgetConfigureActivity : Activity() {
     internal var mAppWidgetId = AppWidgetManager.INVALID_APPWIDGET_ID
     internal lateinit var mAppWidgetText: EditText
 
     internal var mOnClickListener: View.OnClickListener = View.OnClickListener {
-        val context = this@CanvasWidgetConfigureActivity
+        val context = this@TouchWidgetConfigureActivity
 
         // When the button is clicked, store the string locally
         val widgetText = mAppWidgetText.text.toString()
@@ -24,7 +24,7 @@ class CanvasWidgetConfigureActivity : Activity() {
 
         // It is the responsibility of the configuration activity to update the app widget
         val appWidgetManager = AppWidgetManager.getInstance(context)
-        CanvasWidget.updateAppWidget(context, appWidgetManager, mAppWidgetId)
+        TouchWidget.updateAppWidget(context, appWidgetManager, mAppWidgetId)
 
         // Make sure we pass back the original appWidgetId
         val resultValue = Intent()
@@ -57,7 +57,7 @@ class CanvasWidgetConfigureActivity : Activity() {
             return
         }
 
-        mAppWidgetText.setText(loadTitlePref(this@CanvasWidgetConfigureActivity, mAppWidgetId))
+        mAppWidgetText.setText(loadTitlePref(this@TouchWidgetConfigureActivity, mAppWidgetId))
     }
 
     companion object {
@@ -87,7 +87,7 @@ class CanvasWidgetConfigureActivity : Activity() {
         }
 
         fun intent(context: Context, appWidgetId: Int): Intent =
-            Intent(context, CanvasWidgetConfigureActivity::class.java).setFlags(Intent.FLAG_ACTIVITY_NEW_TASK).apply{
+            Intent(context, TouchWidgetConfigureActivity::class.java).setFlags(Intent.FLAG_ACTIVITY_NEW_TASK).apply{
                 putExtra(AppWidgetManager.EXTRA_APPWIDGET_ID, appWidgetId)
             }
     }

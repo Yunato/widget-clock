@@ -16,7 +16,7 @@
                 android:exported="false">
         </service>
 
-        <receiver android:name=".CanvasWidget">
+        <receiver android:name=".TouchWidget">
             <intent-filter>
                 <action android:name="android.appwidget.action.APPWIDGET_UPDATE"/>
             </intent-filter>
@@ -26,7 +26,7 @@
                     android:resource="@xml/canvas_widget_info"/>
         </receiver>
 
-        <activity android:name=".CanvasWidgetConfigureActivity">
+        <activity android:name=".TouchWidgetConfigureActivity">
             <intent-filter>
                 <action android:name="android.appwidget.action.APPWIDGET_CONFIGURE"/>
             </intent-filter>
